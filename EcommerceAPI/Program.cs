@@ -1,4 +1,6 @@
 
+using System.Reflection.Metadata.Ecma335;
+
 namespace EcommerceAPI
 {
     public class Program
@@ -25,6 +27,7 @@ namespace EcommerceAPI
 
             app.UseAuthorization();
 
+            app.MapGet("/", () => "Welcome to Ecommerce");
 
             app.MapControllers();
 
