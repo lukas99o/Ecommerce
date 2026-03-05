@@ -1,4 +1,6 @@
 
+using EcommerceAPI.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
 
 namespace EcommerceAPI
@@ -17,6 +19,12 @@ namespace EcommerceAPI
 
             var app = builder.Build();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                db.Database.Migrate();
+            }
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -27,7 +35,7 @@ namespace EcommerceAPI
 
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Welcome to Ecommerce");
+            app.MapGet("/health", () => "Welcome to Ecommerce");
 
             app.MapControllers();
 
